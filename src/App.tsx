@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import azumcoLogo from './LOGO.png';
 import {
   Code2,
   TrendingUp,
@@ -63,12 +64,23 @@ function Hero3DCanvas() {
     let lastTouchX = 0;
     let lastTouchY = 0;
 
+    let canvasLeft = 0;
+    let canvasTop = 0;
+
+    const updateCanvasBounds = () => {
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      canvasLeft = rect.left;
+      canvasTop = rect.top;
+    };
+
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
         const cr = entry.contentRect;
         if (cr.width > 0 && cr.height > 0) {
           width = canvas.width = cr.width;
           height = canvas.height = cr.height;
+          updateCanvasBounds();
         }
       }
     });
@@ -76,14 +88,21 @@ function Hero3DCanvas() {
     if (canvas.parentElement) {
       resizeObserver.observe(canvas.parentElement);
     }
+    updateCanvasBounds();
 
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left - width / 2;
-      const y = e.clientY - rect.top - height / 2;
+      const x = e.clientX - canvasLeft - width / 2;
+      const y = e.clientY - canvasTop - height / 2;
       targetRotY = (x / Math.max(100, width)) * 1.5;
       targetRotX = (-y / Math.max(100, height)) * 1.5;
     };
+
+    const handleScrollOrResize = () => {
+      updateCanvasBounds();
+    };
+
+    window.addEventListener('scroll', handleScrollOrResize, { passive: true });
+    window.addEventListener('resize', handleScrollOrResize, { passive: true });
 
     const handleTouchStart = (e: TouchEvent) => {
       if (e.touches.length > 0) {
@@ -269,6 +288,8 @@ function Hero3DCanvas() {
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScrollOrResize);
+      window.removeEventListener('resize', handleScrollOrResize);
       canvas.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
@@ -788,7 +809,7 @@ export default function App() {
           <a href="#" className="flex items-center gap-3.5 group">
             <div className="relative w-10 h-10 rounded-xl bg-[#181B1F] border border-[#343A40] flex items-center justify-center p-1.5 overflow-hidden group-hover:border-[#FF6A00] transition-colors">
               <img
-                src="/assets/LOGO.png"
+                src={azumcoLogo}
                 alt="Azumco Logo"
                 className="w-full h-full object-contain"
               />
@@ -1422,7 +1443,7 @@ export default function App() {
               <div className="flex items-center justify-center md:justify-start gap-3">
                 <div className="w-8 h-8 rounded-lg bg-[#181B1F] border border-[#343A40] flex items-center justify-center p-1 overflow-hidden">
                   <img
-                    src="/assets/LOGO.png"
+                    src={azumcoLogo}
                     alt="Azumco Logo"
                     className="w-full h-full object-contain"
                   />
