@@ -39,6 +39,52 @@ import {
   Play
 } from 'lucide-react';
 
+// Resilient Brand Logo Component with Image & Vector Fallback
+function BrandLogo({ size = 40, className = '' }: { size?: number; className?: string }) {
+  const [imgError, setImgError] = useState(false);
+
+  return (
+    <div
+      className={`relative rounded-xl bg-[#181B1F] border border-[#343A40] flex items-center justify-center overflow-hidden transition-colors ${className}`}
+      style={{ width: size, height: size, minWidth: size, minHeight: size }}
+    >
+      {!imgError ? (
+        <img
+          src={azumcoLogo}
+          alt="Azumco Logo"
+          onError={() => setImgError(true)}
+          className="w-full h-full object-contain p-1"
+          loading="eager"
+        />
+      ) : (
+        <svg
+          viewBox="0 0 40 40"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-full h-full p-1.5 text-[#FF6A00]"
+        >
+          <rect width="40" height="40" rx="8" fill="#181B1F" />
+          <path
+            d="M20 7L31 29H24.5L20 18L15.5 29H9L20 7Z"
+            fill="url(#logo_grad)"
+          />
+          <path
+            d="M14 24H26L27.5 27H12.5L14 24Z"
+            fill="#FFFFFF"
+          />
+          <circle cx="20" cy="18" r="2" fill="#FFFFFF" />
+          <defs>
+            <linearGradient id="logo_grad" x1="9" y1="7" x2="31" y2="29" gradientUnits="userSpaceOnUse">
+              <stop stopColor="#FF7A00" />
+              <stop offset="1" stopColor="#C83D00" />
+            </linearGradient>
+          </defs>
+        </svg>
+      )}
+    </div>
+  );
+}
+
 // 3D Canvas Geometry & Particle Matrix Component (Rock-Solid, High-Contrast 3D Core)
 function Hero3DCanvas() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -807,13 +853,7 @@ export default function App() {
           
           {/* Brand Logo with Image Asset */}
           <a href="#" className="flex items-center gap-3.5 group">
-            <div className="relative w-10 h-10 rounded-xl bg-[#181B1F] border border-[#343A40] flex items-center justify-center p-1.5 overflow-hidden group-hover:border-[#FF6A00] transition-colors">
-              <img
-                src={azumcoLogo}
-                alt="Azumco Logo"
-                className="w-full h-full object-contain"
-              />
-            </div>
+            <BrandLogo size={40} className="group-hover:border-[#FF6A00]" />
             <div>
               <div className="font-heading font-bold text-xl tracking-tight text-[#FFFFFF] flex items-center gap-2">
                 Azumco
@@ -1441,13 +1481,7 @@ export default function App() {
             
             <div className="space-y-2 text-center md:text-left">
               <div className="flex items-center justify-center md:justify-start gap-3">
-                <div className="w-8 h-8 rounded-lg bg-[#181B1F] border border-[#343A40] flex items-center justify-center p-1 overflow-hidden">
-                  <img
-                    src={azumcoLogo}
-                    alt="Azumco Logo"
-                    className="w-full h-full object-contain"
-                  />
-                </div>
+                <BrandLogo size={32} />
                 <span className="font-heading font-bold text-xl text-[#FFFFFF]">Azumco</span>
               </div>
               <p className="text-xs text-[#A7ADB3] max-w-sm">
