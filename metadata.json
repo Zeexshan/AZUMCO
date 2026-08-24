@@ -1,0 +1,6 @@
+{
+  "name": "Azumco",
+  "description": "Azumco is a full-service digital presence partner — we take a business online and grow it, from the first line of code to the last customer click.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
