@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import azumcoLogo from './LOGO.png';
+import { AZUMCO_LOGO_DATA_URL } from './logoData';
 import {
   Code2,
   TrendingUp,
@@ -39,48 +40,20 @@ import {
   Play
 } from 'lucide-react';
 
-// Resilient Brand Logo Component with Image & Vector Fallback
+// Resilient Brand Logo Component with Inline Image
 function BrandLogo({ size = 40, className = '' }: { size?: number; className?: string }) {
-  const [imgError, setImgError] = useState(false);
-
   return (
     <div
       className={`relative rounded-xl bg-[#181B1F] border border-[#343A40] flex items-center justify-center overflow-hidden transition-colors ${className}`}
       style={{ width: size, height: size, minWidth: size, minHeight: size }}
     >
-      {!imgError ? (
-        <img
-          src={azumcoLogo}
-          alt="Azumco Logo"
-          onError={() => setImgError(true)}
-          className="w-full h-full object-contain p-1"
-          loading="eager"
-        />
-      ) : (
-        <svg
-          viewBox="0 0 40 40"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-full p-1.5 text-[#FF6A00]"
-        >
-          <rect width="40" height="40" rx="8" fill="#181B1F" />
-          <path
-            d="M20 7L31 29H24.5L20 18L15.5 29H9L20 7Z"
-            fill="url(#logo_grad)"
-          />
-          <path
-            d="M14 24H26L27.5 27H12.5L14 24Z"
-            fill="#FFFFFF"
-          />
-          <circle cx="20" cy="18" r="2" fill="#FFFFFF" />
-          <defs>
-            <linearGradient id="logo_grad" x1="9" y1="7" x2="31" y2="29" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#FF7A00" />
-              <stop offset="1" stopColor="#C83D00" />
-            </linearGradient>
-          </defs>
-        </svg>
-      )}
+      <img
+        src={AZUMCO_LOGO_DATA_URL || azumcoLogo}
+        alt="Azumco Logo"
+        className="w-full h-full object-contain p-1"
+        loading="eager"
+        decoding="sync"
+      />
     </div>
   );
 }
