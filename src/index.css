@@ -11,3 +11,9 @@
     font-family: 'Instrument Serif', Georgia, serif;
   }
 }
+
+iframe#netlify-drawer,
+[data-netlify-drawer],
+#netlify-badge {
+  display: none !important;
+}
